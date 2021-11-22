@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
+    <title>Document</title>
+
+</head>
+<body>
+
+
+
+
+    <form action="{{ url_for('sql')}}" method="POST">
+    <div class="form-control">
+        <label class="label">
+          <span class="label-text">info</span>
+        </label> 
+        <textarea placeholder="SQL Command" name="msg" class="textarea h-24 textarea-bordered textarea-info">
+            select * from customers;
+        </textarea>
+      </div>
+    </form>
+
+        <button type="submit">Login</button>
+    {% if not error %}
+        <table border="2">
+            {%for i in range(len_of_name)%}
+            <th>
+                {{name[i] }}
+            </th>
+            {%endfor%}
+            {%for i in range(0 , len_of_data) %}
+            <tr>
+                {%for j in range(0 , len_of_name) %}
+                    <td>
+                        {{data[i][j]}}
+                    </td>
+                {%endfor%}
+            </tr>
+            {%endfor%}
+        </table>
+    {%endif%}
+    {% if error %}
+        <script>
+            alert(`Error: {{error}}`)
+        </script>
+    {%endif%}
+</body>
+</html>
