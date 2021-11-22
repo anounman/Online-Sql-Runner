@@ -11,8 +11,7 @@ def main(command):
             name.append(cursor.description[i][0])
         data = []
         for i in result:
-            data.append(i)
-        print(data[0][0])
+            print(i)
         connection.commit()
         cursor.close()
     except sqlite3.Error as error:
@@ -23,6 +22,5 @@ def main(command):
             connection.close()
 
 if __name__ == '__main__':
-    main("select * from Employees;")
     
     

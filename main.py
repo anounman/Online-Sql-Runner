@@ -1,35 +1,59 @@
 import sqlite3
-from flask import Flask, render_template, request, redirect, url_for, flash
-    
+from flask import Flask, render_template, request, redirect, url_for, flash , redirect
+
+import os
 app = Flask(__name__)
 
+# try:
+#     os.system('curl "https://github.com/anounboy/Online-Sql-Runner/blob/master/database.db?raw=true" -o database.db')
+# except Exception:
+#     pass
+
 @app.route('/' , methods=['GET', 'POST'])
-def sql():
+def sql(command = ''):
         try:
-            command = ''
             if request.method == "POST":
                 command = request.form.get("msg")
-                print("\n\n"+command+"\n\n")
             if command == '':
                 command = "select * from Customers;"
             connection = sqlite3.connect('database.db')
             cursor = connection.cursor()
-            cursor.execute(command)
+            print(str(command))
+            cursor.execute(str(command))
             result = cursor.fetchall()
-            name = []
-            for i in range(len(cursor.description)):
-                name.append(cursor.description[i][0])
-            data = []
-            for i in result:
-                data.append(i)
-            connection.commit()
+            if result:
+                name = []
+                for i in range(len(cursor.description)):
+                    name.append(cursor.description[i][0])
+                data = []
+                for i in result:
+                    data.append(i)
+                connection.commit()
             cursor.close()
             if(connection):
                 connection.close()
-            return render_template('index.html' , len_of_name=len(name), len_of_data=len(data),name=name, data=data , error='')
+            if result:
+                return render_template('index.html' , len_of_name=len(name), len_of_data=len(data),name=name, data=data , command=str(command) , error='')
+            else:
+                return render_template('index.html' , len_of_name=0, len_of_data=0,name=[], data=[] , command=str(command) , error='')
         except sqlite3.Error as error:
-            error = str(error)
-            return render_template('index.html' , error=str(error))
+            error = error
+            return render_template('index.html' , error=error)
+        except Exception():
+            return render_template('index.html')
+@app.route('/Customers')
+def Customers():
+    return sql("select * from Customers;")
+@app.route('/Categories')
+def Categories():
+    return sql("select * from Categories;")
+@app.route('/Employees')
+def Employees():
+    return sql("select * from Employees;")
+@app.route('/Orders')
+def Orders():
+    return sql("select * from Orders;")
+
 if __name__ == '__main__':
     app.run(debug=True)
     
