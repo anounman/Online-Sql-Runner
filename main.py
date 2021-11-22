@@ -4,11 +4,10 @@ from flask import Flask, render_template, request, redirect, url_for, flash , re
 import os
 app = Flask(__name__)
 
-# try:
-#     os.system('curl "https://github.com/anounboy/Online-Sql-Runner/blob/master/database.db?raw=true" -o database.db')
-# except Exception:
-#     pass
-
+if os.name == 'nt':
+    os.system("copy '.\database (1).db' .\database.db")
+else:
+    os.system("cp './database (1).db' './database.db'")
 @app.route('/' , methods=['GET', 'POST'])
 def sql(command = ''):
         try:
