@@ -38,8 +38,6 @@ def sql(command = ''):
         except sqlite3.Error as error:
             error = error
             return render_template('index.html' , error=error)
-        except Exception():
-            return render_template('index.html')
 @app.route('/Customers')
 def Customers():
     return sql("select * from Customers;")
