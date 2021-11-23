@@ -7,9 +7,8 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <style>
         table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  align-items: right;
+    border : 5px solid ;  
+    overflow-x : auto;      
 }
 
 td, th {
@@ -36,7 +35,7 @@ tr:nth-child(even) {
               <label class="label">
                 <h1 class="text-green-500 font-extrabold text-3xl" >Enter SQL Command</h1>
               </label> 
-              <div class="sm:gride items-center lg:flex">
+              <div class="sm:gride items-start lg:flex">
                 <textarea rows="5" placeholder=" Enter SQL Command"name="msg" class="w-full textarea width-text h-40 rounded-xl text-red-500 textarea-ghost">
                     {%if command%}
                         {{command}}
@@ -82,13 +81,13 @@ tr:nth-child(even) {
     </div>
 
 
-    <div class="flex flex-1 m-10 p-10">
+    <div class="m-10">
         <div class="gride">
             <Label class="label">
                 <h1 class="text-green-500 font-extrabold text-5xl" >Result</h1>
             </Label>
             {% if not error %}
-            <table class="table-auto">
+            <table>
                 {%for i in range(len_of_name)%}
                 <th>
                     {{name[i] }}

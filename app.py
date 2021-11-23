@@ -17,7 +17,7 @@ def sql(command = ''):
                 command = "select * from Customers;"
             connection = sqlite3.connect('database.db')
             cursor = connection.cursor()
-            print(str(command))
+            # print(str(command))
             cursor.execute(str(command))
             result = cursor.fetchall()
             if result:
